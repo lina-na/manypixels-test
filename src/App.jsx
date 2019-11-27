@@ -1,27 +1,28 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import {
+  BrowserRouter as Router,
+  Switch, Route, Redirect,
+} from 'react-router-dom';
+import Layout from './hoc/Layout';
+import Main from './components/pages/Main';
+import Profile from './components/pages/Profile';
 
-const EXCHANGE_RATES = gql`{
-  popular_artists {
-    artists {
-      id
-      name
-    }
-  }
-}`;
-
-function App() {
-  const { loading, error, data } = useQuery(EXCHANGE_RATES);
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-  return (
-    <div className="App">
-      <ul>
-        {data.popular_artists.artists.map((item) => <li key={item.id}>{item.name}</li>)}
-      </ul>
-    </div>
-  );
-}
+const App = () => (
+  <Router>
+    <Layout>
+      <Switch>
+        <Route exact path="/">
+          <Redirect to="/artists" />
+        </Route>
+        <Route path="/artists/:id">
+          <Profile />
+        </Route>
+        <Route path="/artists">
+          <Main />
+        </Route>
+      </Switch>
+    </Layout>
+  </Router>
+);
 
 export default App;
