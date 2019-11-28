@@ -11,15 +11,9 @@ const App = () => (
   <Router>
     <Layout>
       <Switch>
-        <Route exact path="/">
-          <Redirect to="/artists" />
-        </Route>
-        <Route path="/artists/:id">
-          <Profile />
-        </Route>
-        <Route path="/artists">
-          <Main />
-        </Route>
+        <Route exact path="/" render={() => <Redirect to="/artists" />} />
+        <Route path="/artists/:id" component={Profile} />
+        <Route path="/artists" component={Main} />
       </Switch>
     </Layout>
   </Router>
